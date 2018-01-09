@@ -9,47 +9,26 @@ export default class NewsItems extends Component {
       newStories: [],
       storyList: []
     }
+    NewsItems.getInitialProps = this.handleGetTopStories()
   }
 
+  async handleGetTopStories () {
+    const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+    const data = await res.json()
+    let stories = []
+    for (let i = 0; i < 30; i++){
+      let otherRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`)
+      let otherData = await otherRes.json()
+      stories.push(otherData)
+    }
+    this.setState({topStories: stories})
 
-  handleGetTopStories() {
-      let topThirty = []
-    fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-    .then(res => {
-      console.log(res)
-      return res.json()
-    }).then(data => {
-      console.log('data', data)
-      let list = []
-      for (let i = 0; i < 30; i++){
-        list.push(data[i])
-      }
-      list.map((li) => {
-        fetch(`https://hacker-news.firebaseio.com/v0/item/${li}.json?print=pretty`)
-        .then(res => {
-          return res.json()
-        }).then(data => {
-          topThirty.push(data)
-        })
-      })
-      console.log('top', topThirty)
-      this.setState({ topStories: topThirty })
-      // this.handleGetStoryList(list)
-    })
-    return topThirty
   }
 
-  handleGetStoryList() {
-    let storiesData = list.map((storyCode) => {
-      fetch(`https://hacker-news.firebaseio.com/v0/item/${storyCode}.json?print=pretty`)
-      .then(res => {
-        return res.json()
-      }).then(data => {
-        // console.log('story data', data)
-        return data
-      })
-      console.log("storiesData", storiesData)
-    })
+  async handleGetStory (storyId) {
+    const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json?print=pretty`)
+    const story = await res.json()
+    return story
   }
 
 
@@ -58,17 +37,19 @@ export default class NewsItems extends Component {
 
   }
 
-  render(props){
-    console.log('why?', this.state.topStories)
+  render(){
     const stories = this.state.topStories
-    console.log('sturrries', stories)
     return (
       <div>
         <h1>Welcome to Reactor News!</h1>
         <ul>
           {stories.map(( story ) => (
-            <NewsItem key={story.id} story={story} />
+            <NewsItem
+              key = {story.id}
+              story = {story}
+            />
           ))}
+
         </ul>
       </div>
     )

@@ -6,7 +6,7 @@ export default class HNAppClone extends Component {
     super(props)
     this.state = {}
   }
-  mixins: [reactFireMixin]
+  // mixins: [reactFireMixin]
 
   render (props) {
     return (
