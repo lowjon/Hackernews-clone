@@ -6,24 +6,14 @@ export default class NewsItems extends Component {
     super(props)
     this.state = {
       topStories: [],
-      newStories: []
+      newStories: [],
+      storyList: []
     }
-    this.handleGetStories = this.handleGetStories.bind(this)
   }
 
-  handleGetStories(list) {
-    let storiesData = list.map((storyCode) => {
-      fetch(`https://hacker-news.firebaseio.com/v0/item/${storyCode}.json?print=pretty`)
-      .then(res => {
-        console.log('success', res)
-        return res.json()
-      }).then(data => {
-        console.log('story data', data)
-      })
-    })
-  }
 
-  componentDidMount(){
+  handleGetTopStories() {
+      let topThirty = []
     fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     .then(res => {
       console.log(res)
@@ -34,15 +24,52 @@ export default class NewsItems extends Component {
       for (let i = 0; i < 30; i++){
         list.push(data[i])
       }
-      console.log('list', list)
-      this.handleGetStories(list)
+      list.map((li) => {
+        fetch(`https://hacker-news.firebaseio.com/v0/item/${li}.json?print=pretty`)
+        .then(res => {
+          return res.json()
+        }).then(data => {
+          topThirty.push(data)
+        })
+      })
+      console.log('top', topThirty)
+      this.setState({ topStories: topThirty })
+      // this.handleGetStoryList(list)
+    })
+    return topThirty
+  }
+
+  handleGetStoryList() {
+    let storiesData = list.map((storyCode) => {
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${storyCode}.json?print=pretty`)
+      .then(res => {
+        return res.json()
+      }).then(data => {
+        // console.log('story data', data)
+        return data
+      })
+      console.log("storiesData", storiesData)
     })
   }
-  render(){
+
+
+  componentDidMount(){
+    this.handleGetTopStories()
+
+  }
+
+  render(props){
+    console.log('why?', this.state.topStories)
+    const stories = this.state.topStories
+    console.log('sturrries', stories)
     return (
       <div>
-        Hello from NewsItems.  Check console for fetch results from Hackernews API
-        <NewsItem story = 'test'/>
+        <h1>Welcome to Reactor News!</h1>
+        <ul>
+          {stories.map(( story ) => (
+            <NewsItem key={story.id} story={story} />
+          ))}
+        </ul>
       </div>
     )
   }

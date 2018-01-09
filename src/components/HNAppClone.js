@@ -8,12 +8,15 @@ export default class HNAppClone extends Component {
   }
   mixins: [reactFireMixin]
 
-  render () {
+  render (props) {
     return (
       <div>
         <h1>Here is the app!</h1>
         <p>Yo Tayt whats up?</p>
-        <NewsItems />
+        <NewsItems>
+          {this.props.children}
+        </NewsItems>
+
       </div>
     )
   }

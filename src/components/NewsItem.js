@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 
-const NewsItem = (props) => {
-  return (
-    <div>
-      <p>Here is a story, yo. {props.story}</p>
-    </div>
-  )
-}
+const NewsItem = ({ story }) => (
+  <li>
+    <p>{story}</p>
+  </li>
+
+
+
+)
 
 export default NewsItem
