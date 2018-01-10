@@ -1,0 +1,20 @@
+.news-item {
+  background-color: #F6F6EF;
+  border-width: thin;
+  border-color: darkGray ;
+  display: flex;
+  flex-direction: row;
+  padding-left: $s-size;
+  padding-right: $s-size;
+
+  .news-item__title {
+
+    color: inherit;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration: none;
+
+  }
+
+}

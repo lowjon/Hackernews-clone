@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import dummy from '../dummyData.js'
+//currently running with dummy data compiled by faker.js to improve performance while developing
 
 export default class NewsItems extends Component {
   constructor(props){
     super(props)
     this.state = {
-      topStories: [],
+      // make sure to change topStories back to an empty array when implementing fetch instead of dummy data
+      topStories: dummy,
       newStories: [],
       storyList: []
     }
@@ -13,15 +16,19 @@ export default class NewsItems extends Component {
   }
 
   async handleGetTopStories () {
-    const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-    const data = await res.json()
-    let stories = []
-    for (let i = 0; i < 30; i++){
-      let otherRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`)
-      let otherData = await otherRes.json()
-      stories.push(otherData)
-    }
-    this.setState({topStories: stories})
+
+    // ------- this works but is really slow and slows down development ------ FIX
+    // const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+    // const data = await res.json()
+    //
+    // let stories = []
+    // for (let i = 0; i < 5; i++){
+    //   let otherRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`)
+    //   let otherData = await otherRes.json()
+    //   stories.push(otherData)
+    // }
+    // console.log(stories)
+    // this.setState({topStories: stories})
 
   }
 
@@ -33,7 +40,7 @@ export default class NewsItems extends Component {
 
 
   componentDidMount(){
-    this.handleGetTopStories()
+    // **** this.handleGetTopStories()
 
   }
 
@@ -47,6 +54,7 @@ export default class NewsItems extends Component {
             <NewsItem
               key = {story.id}
               story = {story}
+              className = "news-item"
             />
           ))}
 
