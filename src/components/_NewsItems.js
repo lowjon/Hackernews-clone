@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import {
-  Route
-} from 'react-router-dom'
 import NewsItem from './NewsItem'
-import Navbar from './Navbar'
-import dummy from '../dummyData'
-
+import dummy from '../dummyData.js'
 //currently running with dummy data compiled by faker.js to improve performance while developing
 
 export default class NewsItems extends Component {
@@ -53,7 +48,6 @@ export default class NewsItems extends Component {
     const stories = this.state.topStories
     return (
       <div>
-        <Route component={ Navbar }/>
         <h1>Welcome to Reactor News!</h1>
         <ul>
           {stories.map(( story ) => (

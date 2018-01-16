@@ -1,17 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+import Navbar from './components/Navbar'
 import NewsItems from './components/NewsItems'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 
-const App = () => (
-  <MuiThemeProvider>
-    <NewsItems className='news-items'/>
-  </MuiThemeProvider>
-)
+
 
 ReactDOM.render(
-  <App />,
+  <Router>
+    <div>
+      <Route path='/' component={NewsItems} />
+    </div>
+  </Router>,
   document.getElementById('app')
 )
