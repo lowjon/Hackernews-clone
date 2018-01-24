@@ -13,54 +13,45 @@ export default class NewsItems extends Component {
     super(props)
     this.state = {
       // make sure to change topStories back to an empty array when implementing fetch instead of dummy data
-      topStories: dummy,
-      newStories: [],
-      storyList: []
+      hnPage: 'beststories',
+      pageNumber: 0,
+      stories: [],
     }
-    NewsItems.getInitialProps = this.handleGetTopStories()
+    NewsItems.getInitialProps = this.handleGetStories()
   }
 
-  async handleGetTopStories () {
+  async handleGetStories () {
 
     // ------- this works but is really slow and slows down development ------ FIX
-    // const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-    // const data = await res.json()
-    //
-    // let stories = []
+    const res = await fetch(`https://hacker-news.firebaseio.com/v0/${this.state.hnPage}.json?print=pretty`)
+    const data = await res.json()
+    let stories = data.slice((0 + (30 * this.state.pageNumber)), (30 + (30 * this.state.pageNumber)))
     // for (let i = 0; i < 5; i++){
     //   let otherRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`)
     //   let otherData = await otherRes.json()
     //   stories.push(otherData)
     // }
     // console.log(stories)
-    // this.setState({topStories: stories})
+    this.setState({ stories })
 
   }
-
-  async handleGetStory (storyId) {
-    const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json?print=pretty`)
-    const story = await res.json()
-    return story
-  }
-
 
   componentDidMount(){
-    // **** this.handleGetTopStories()
 
   }
 
   render(){
-    const stories = this.state.topStories
+    const stories = this.state.stories
     return (
       <div>
+
         <Route component={ Navbar }/>
         <h1>Welcome to Reactor News!</h1>
         <ul>
           {stories.map(( story ) => (
             <NewsItem
-              key = {story.id}
-              story = {story}
-              className = "news-item"
+              key={story}
+              story={story}
             />
           ))}
 
