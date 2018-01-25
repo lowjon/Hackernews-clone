@@ -4,13 +4,12 @@
   border-color: darkGray ;
   display: flex;
   flex-direction: row;
-  padding-left: $s-size;
-  padding-right: $s-size;
+  padding: $s-size $s-size 0 $s-size;
 
   .news-item__title {
 
     color: inherit;
-    font-size: 1rem;
+    font-size: 13px;
     font-style: normal;
     font-weight: 400;
     text-decoration: none;
