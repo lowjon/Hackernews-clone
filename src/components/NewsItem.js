@@ -19,12 +19,15 @@ export default class NewsItem extends Component {
   }
 
   render () {
-    const newsStroy = this.state.theStory
+    const newsStory = this.state.theStory
     return (
       <div className='news-item'>
-        <a className='news-item__title' href={newsStroy.url}><p>{newsStroy.title}</p></a>
-        <p>{newsStroy.by}</p>
-        <p>score: {newsStroy.score}</p>
+        <div className='news-item__top'>
+          <a className='news-item__title' href={newsStory.url}><p>{newsStory.title}</p></a>
+        </div>
+        <div className='news-item__bottom'>
+          <p>{newsStory.score} points by {newsStory.by} x time ago | hide | comments</p>
+        </div>
       </div>
     )
   }

@@ -3,7 +3,7 @@
   border-width: thin;
   border-color: darkGray ;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: $s-size $s-size 0 $s-size;
 
   .news-item__title {
@@ -14,6 +14,11 @@
     font-weight: 400;
     text-decoration: none;
 
+  }
+  .news-item__bottom {
+    color: #828282;
+    font-size: 9px;
+    font-weight: 400;
   }
 
 }
