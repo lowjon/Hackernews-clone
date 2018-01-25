@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import NewsItems from './components/NewsItems'
@@ -13,6 +12,7 @@ import './styles/styles.scss'
 ReactDOM.render(
   <Router>
     <div>
+      <Route component={Navbar} />
       <Route path='/' component={NewsItems} />
     </div>
   </Router>,
